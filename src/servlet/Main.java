@@ -14,7 +14,6 @@ import javax.servlet.http.HttpSession;
 import model.GetMutterListLogic;
 import model.Mutter;
 import model.PostMutterLogic;
-import model.PrintMutterLogic;
 import model.User;
 
 @WebServlet("/Main")
@@ -30,10 +29,6 @@ public class Main extends HttpServlet {
 		// ログイン状態の確認
 		HttpSession session = request.getSession();
 		User loginUser = (User) session.getAttribute("loginUser");
-		
-		// 画面表示用の文字列を作って、リクエストスコープに渡す
-		PrintMutterLogic pml = new PrintMutterLogic();
-		request.setAttribute("buildedText", pml.execute(mutterList));
 		
 		// 取得したUserインスタンスをチェック
 		// ログイン情報が入っていなければ、ログイン画面へリダイレクト
@@ -66,12 +61,6 @@ public class Main extends HttpServlet {
 			PostMutterLogic postMutterLogic = new PostMutterLogic();
 			// 処理の実行、リストの先頭につぶやき情報インスタンスが入る
 			postMutterLogic.execute(mutter);
-			
-			// 画面表示用の文字列を作って、リクエストスコープに渡す
-			GetMutterListLogic gmll = new GetMutterListLogic();
-			List<Mutter> mutterList = gmll.execute();
-			PrintMutterLogic pml = new PrintMutterLogic();
-			request.setAttribute("buildedText", pml.execute(mutterList));
 		} else {
 			//エラーメッセージをリクエストスコープに保存する
 			request.setAttribute("errorMsg", "つぶやきが入力されていません");

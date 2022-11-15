@@ -13,7 +13,6 @@ import javax.servlet.http.HttpSession;
 
 import dao.MutterDAO;
 import model.Mutter;
-import model.PrintMutterLogic;
 import model.User;
 
 @WebServlet("/RemoveMutter")
@@ -27,8 +26,6 @@ public class RemoveMutter extends HttpServlet {
 		MutterDAO dao = new MutterDAO();
 		List<Mutter> mutterList = dao.findUser(loginUser.getName());
 		request.setAttribute("mutterList", mutterList);
-		PrintMutterLogic pml = new PrintMutterLogic();
-		request.setAttribute("buildedText", pml.execute(loginUser, mutterList));
 		RequestDispatcher dispatcher = request.getRequestDispatcher(forwardPath);
 		dispatcher.forward(request, response);		
 	}
@@ -38,9 +35,8 @@ public class RemoveMutter extends HttpServlet {
 		MutterDAO dao = new MutterDAO();
 		dao.removeMutter(ary);		
 		List<Mutter> mutterList = dao.findAll();
-		//ArrayList<String> arrayList = new ArrayList<>();
 		
-		
+		// 失敗の歴史
 		/* removeによって配列が短くなる。次の(i)が存在しなくなる。
 		for(String s : ary) {
 			int i = Integer.parseInt(s);
@@ -56,23 +52,10 @@ public class RemoveMutter extends HttpServlet {
 			}
 		}
 		*/
-		
-		// 画面表示用の文字列を作って、リクエストスコープに渡す
-		PrintMutterLogic pml = new PrintMutterLogic();
-		request.setAttribute("buildedText", pml.execute(mutterList));
+		// 失敗の歴史ここまで
 		
 		request.setAttribute("mutterList", mutterList);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/main.jsp");
 		dispatcher.forward(request, response);
-		
-//		テスト用
-//		String[] ary = request.getParameterValues("mutter");
-//		ArrayList<String> list = new ArrayList<>();
-//		for(String s : ary) {
-//			list.add(s);
-//		}
-//		request.setAttribute("test", list);
-//		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/test.jsp");
-//		dispatcher.forward(request, response);
 	}
 }
