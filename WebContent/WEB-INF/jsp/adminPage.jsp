@@ -34,10 +34,13 @@
 <p style="font-size:1.5rem">つぶやきリスト(非表示を含む)</p>
 <c:choose>
 <c:when test="${not empty mutterList}">
+	<ul>
 	<c:forEach var="mutter" items="${mutterList}">
-		<p><c:out value="${mutter.date}" /> <c:out value="${mutter.userName}"/>:
-		<c:out value="${mutter.text}"/></p>
+		<li>
+		<c:out value="${mutter.date} ${mutter.userName} ${mutter.date} good:${mutter.good}"/>
+		</li>
 	</c:forEach>
+	</ul>
 </c:when>
 <c:otherwise>
 	<p>現在つぶやきはありません</p>
