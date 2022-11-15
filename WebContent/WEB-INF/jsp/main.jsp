@@ -26,7 +26,7 @@
 	<c:forEach var="mutter" items="${mutterList}">
 		<li>
 		<c:out value="${mutter.date} ${mutter.userName} ${mutter.date}"/>
-		<button type="submit" value="<c:out value="${mutter.id}"/>">good</button>
+		<button type="submit" name="mutter_id" value="<c:out value="${mutter.id}"/>">good</button>
 		<c:out value="${mutter.good}"/>		
 		</li>
 	</c:forEach>
