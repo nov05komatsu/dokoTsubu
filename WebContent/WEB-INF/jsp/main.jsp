@@ -21,13 +21,17 @@
 <!-- <c:if test="${not empty buildedText}">${buildedText}</c:if> -->
 <c:choose>
 <c:when test="${not empty mutterList}">
+<form action="/dokoTsubu/Good" method="post">
 	<ul>
 	<c:forEach var="mutter" items="${mutterList}">
 		<li>
-		<c:out value="${mutter.date} ${mutter.userName} ${mutter.date} good:${mutter.good}"/>
+		<c:out value="${mutter.date} ${mutter.userName} ${mutter.date}"/>
+		<button type="submit" value="<c:out value="${mutter.id}"/>">good</button>
+		<c:out value="${mutter.good}"/>		
 		</li>
 	</c:forEach>
 	</ul>
+</form>
 </c:when>
 <c:otherwise>
 	<p>現在つぶやきはありません</p>
