@@ -32,18 +32,19 @@ public class Register extends HttpServlet {
 		
 		UserDAO dao = new UserDAO();		
 		List<User> userList = dao.findAll();
+		User user = new User(name, pass);
 		
 		RegisterLogic rl = new RegisterLogic();
 		if(!rl.execute(name, userList)) {
 			request.setAttribute("msg", "そのユーザー名はすでに使用されています。");
 		} else {
-			User user = new User(name, pass);
 			if(dao.create(user)) {
-				request.setAttribute("msg", "登録が完了しました。");				
+				request.setAttribute("msg", "登録が完了しました。");
 			}
 			userList = dao.findAll();
 		}
 		
+		dao.createTable(user);
 		RequestDispatcher dispathcer = request.getRequestDispatcher("/WEB-INF/jsp/info.jsp");
 		dispathcer.forward(request, response);
 		}

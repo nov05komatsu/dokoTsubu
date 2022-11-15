@@ -45,6 +45,7 @@ public class UserDAO {
 	public boolean create(User user) {
 		// データベース接続
 		try(Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)){
+			
 			String sql = "INSERT INTO USERLIST (NAME, PASS) VALUES(?, ?)";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			
@@ -62,6 +63,31 @@ public class UserDAO {
 			return false;
 		}
 		return true;
+	}
+	
+	// できれば戻り値を真偽値にして使いたい
+	public void createTable(User user) {
+		
+		try(Connection conn = DriverManager.getConnection(
+				JDBC_URL, DB_USER, DB_PASS)){
+			String sql = "SELECT id, name FROM userlist WHERE name LIKE ?";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, user.getName());
+			ResultSet rs = pStmt.executeQuery();
+			while(rs.next()) {
+				int id = rs.getInt("id");
+				String sql2 = "CREATE TABLE USER_ID_" + id
+						+ "_GOODLIST ("
+						+ "USER_ID int NOT NULL,"
+						+ "MUTTER_ID int PRIMARY KEY NOT NULL,"
+						+ "DATE varchar(40) NOT NULL"
+						+ ")";
+				PreparedStatement pStmt2 = conn.prepareStatement(sql2);
+				pStmt2.execute();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public boolean checkTable() {
