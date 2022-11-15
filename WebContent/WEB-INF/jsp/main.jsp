@@ -23,8 +23,9 @@
 <c:when test="${not empty mutterList}">
 	<ul>
 	<c:forEach var="mutter" items="${mutterList}">
-		<li><c:out value="${mutter.date}" /> <c:out value="${mutter.userName}"/>:
-		<c:out value="${mutter.text}"/><c:out value="${mutter.good}"/></li>
+		<li>
+		<c:out value="${mutter.date} ${mutter.userName} ${mutter.date} good:${mutter.good}"/>
+		</li>
 	</c:forEach>
 	</ul>
 </c:when>
