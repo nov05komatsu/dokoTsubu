@@ -79,7 +79,7 @@ public class UserDAO {
 				String sql2 = "CREATE TABLE USER_ID_" + id
 						+ "_GOODLIST ("
 						+ "USER_ID int NOT NULL,"
-						+ "MUTTER_ID int PRIMARY KEY NOT NULL,"
+						+ "MUTTER_ID int PRIMARY KEY,"
 						+ "DATE varchar(40) NOT NULL"
 						+ ")";
 				PreparedStatement pStmt2 = conn.prepareStatement(sql2);
