@@ -21,7 +21,7 @@ public class MutterDAO {
 		
 		// データベース接続
 		try(Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)){
-			String sql = "SELECT ID, NAME, TEXT, DATE FROM MUTTER WHERE DEL = 1 ORDER BY ID DESC";
+			String sql = "SELECT ID, NAME, TEXT, DATE, GOOD FROM MUTTER WHERE DEL = 1 ORDER BY ID DESC";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			
 			// SELECTを実行
@@ -33,7 +33,8 @@ public class MutterDAO {
 				String name = rs.getString("NAME");
 				String text = rs.getString("TEXT");
 				String date = rs.getString("DATE");
-				Mutter mutter = new Mutter(id, name, text, date);
+				int good = rs.getInt("GOOD");
+				Mutter mutter = new Mutter(id, name, text, date, good);
 				mutterList.add(mutter);
 			}
 		} catch (SQLException e) {
@@ -60,7 +61,8 @@ public class MutterDAO {
 				String name = rs.getString("NAME");
 				String text = rs.getString("TEXT");
 				String date = rs.getString("DATE");
-				Mutter mutter = new Mutter(id, name, text, date);
+				int good = rs.getInt("GOOD");
+				Mutter mutter = new Mutter(id, name, text, date, good);
 				mutterList.add(mutter);
 			}
 		} catch (SQLException e) {
@@ -98,7 +100,7 @@ public class MutterDAO {
 		
 		// データベース接続
 		try(Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)){
-			String sql = "SELECT ID, NAME, TEXT, DATE FROM MUTTER WHERE NAME LIKE ? AND DEL = 1 ORDER BY ID DESC";
+			String sql = "SELECT ID, NAME, TEXT, DATE, GOOD FROM MUTTER WHERE NAME LIKE ? AND DEL = 1 ORDER BY ID DESC";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1, userName);
 			
@@ -111,7 +113,8 @@ public class MutterDAO {
 				String name = rs.getString("NAME");
 				String text = rs.getString("TEXT");
 				String date = rs.getString("DATE");
-				Mutter mutter = new Mutter(id, name, text, date);
+				int good = rs.getInt("GOOD");
+				Mutter mutter = new Mutter(id, name, text, date, good);
 				mutterList.add(mutter);
 			}
 		} catch (SQLException e) {
