@@ -21,10 +21,12 @@
 <!-- <c:if test="${not empty buildedText}">${buildedText}</c:if> -->
 <c:choose>
 <c:when test="${not empty mutterList}">
+	<ul>
 	<c:forEach var="mutter" items="${mutterList}">
-		<p><c:out value="${mutter.date}" /> <c:out value="${mutter.userName}"/>:
-		<c:out value="${mutter.text}"/></p>
+		<li><c:out value="${mutter.date}" /> <c:out value="${mutter.userName}"/>:
+		<c:out value="${mutter.text}"/><c:out value="${mutter.good}"/></li>
 	</c:forEach>
+	</ul>
 </c:when>
 <c:otherwise>
 	<p>現在つぶやきはありません</p>
