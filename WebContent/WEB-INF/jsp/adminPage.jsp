@@ -11,8 +11,8 @@
 <body>
 <p><c:out value="${loginUser.name}"/>でログイン中</p>
 <a href="/dokoTsubu/Logout">ログアウト</a><br />
-<a href="/dokoTsubu/RemoveMutterAdmin"><button>つぶやきを非表示にする</button></a><br />
-<a href="/dokoTsubu/VisibleMutterAdmin"><button>非表示のつぶやきを表示させる</button></a><br />
+<p><a href="/dokoTsubu/RemoveMutterAdmin"><button>つぶやきを非表示にする</button></a><br></p>
+<p><a href="/dokoTsubu/VisibleMutterAdmin"><button>非表示のつぶやきを表示させる</button></a></p>
 <c:if test="${not empty errorMsg}">${errorMsg}</c:if>
 <p style="font-size:1.5rem">ユーザーリスト</p>
 <table>

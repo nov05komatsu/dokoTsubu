@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>どこつぶ管理者ページ</title>
+<script src="/dokoTsubu/js/checkboxAll.js"></script>
 </head>
 <body> 
 <c:choose>
@@ -15,7 +16,9 @@
 	</c:when>
 	<c:otherwise>
 		<p>どのつぶやきを表示させますか？</p>
-		<form action="/dokoTsubu/VisibleMutterAdmin" method="post">
+		<p><input type="button" value="すべて選択" onclick="allCheck(true)"></p>
+		<p><input type="button" value="すべての選択を解除" onclick="allCheck(false)"></p>
+		<form action="/dokoTsubu/VisibleMutterAdmin" method="post" name="mutterList">
 			<c:forEach var="mutter" items="${mutterList}">
 				<p><input type="checkbox" name="list" value="<c:out value="${mutter.id}"/>">
 				<c:out value="${mutter.date}"/>

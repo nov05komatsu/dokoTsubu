@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>どこつぶ管理者ページ</title>
+<script src="/dokoTsubu/js/checkboxAll.js"></script>
 </head>
 <body> 
 <c:choose>
@@ -14,14 +15,16 @@
 		<a href="/dokoTsubu/Admin"><button>戻る</button></a>
 	</c:when>
 	<c:otherwise>
-		<p>どのつぶやきを削除しますか？</p>
-		<form action="/dokoTsubu/RemoveMutterAdmin" method="post">
+		<p>どのつぶやきを非表示にしますか？</p>
+		<p><input type="button" value="すべて選択" onclick="allCheck(true)"></p>
+		<p><input type="button" value="すべての選択を解除" onclick="allCheck(false)"></p>
+		<form action="/dokoTsubu/RemoveMutterAdmin" method="post" name="mutterList">
 			<c:forEach var="mutter" items="${mutterList}">
 				<p><input type="checkbox" name="list" value="<c:out value="${mutter.id}"/>">
 				<c:out value="${mutter.date}"/>
 				<c:out value="${mutter.userName }"/>:<c:out value="${mutter.text}"/></p>
 			</c:forEach>
-		<input type="submit" value="削除する"><br>
+		<input type="submit" value="非表示にする"><br>
 		</form>
 		<br>
 		<a href="/dokoTsubu/Admin"><button>キャンセル</button></a>
