@@ -49,7 +49,7 @@ public class MutterDAO {
 		
 		// データベース接続
 		try(Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)){
-			String sql = "SELECT ID, NAME, TEXT, DATE FROM MUTTER ORDER BY ID DESC";
+			String sql = "SELECT ID, NAME, TEXT, DATE, GOOD FROM MUTTER ORDER BY ID DESC";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			
 			// SELECTを実行
