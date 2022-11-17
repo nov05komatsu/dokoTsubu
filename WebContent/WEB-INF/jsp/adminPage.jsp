@@ -10,8 +10,9 @@
 </head>
 <body>
 <p><c:out value="${loginUser.name}"/>でログイン中</p>
-<a href="/dokoTsubu/Logout">ログアウト</a>
-<a href="/dokoTsubu/RemoveMutterAdmin"><button>つぶやきを削除する</button></a>
+<a href="/dokoTsubu/Logout">ログアウト</a><br />
+<a href="/dokoTsubu/RemoveMutterAdmin"><button>つぶやきを非表示にする</button></a><br />
+<a href="/dokoTsubu/VisibleMutterAdmin"><button>非表示のつぶやきを表示させる</button></a><br />
 <c:if test="${not empty errorMsg}">${errorMsg}</c:if>
 <p style="font-size:1.5rem">ユーザーリスト</p>
 <table>
