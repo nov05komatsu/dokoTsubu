@@ -48,10 +48,10 @@ public class Main extends HttpServlet {
 		// trim()しないと半角スペースだけのつぶやきも通る
 		String text = request.getParameter("text").trim();
 		
+		HttpSession session = request.getSession();
 		// 入力値のチェックと処理
 		if(text != null && text.length() != 0) {
 			// セッションスコープを使うのでHttpSessionインスタンスを取得
-			HttpSession session = request.getSession();
 			// セッションスコープ内の属性名loginUserのインスタンスを取得
 			User loginUser = (User)session.getAttribute("loginUser");
 			
@@ -63,14 +63,14 @@ public class Main extends HttpServlet {
 			postMutterLogic.execute(mutter);
 		} else {
 			//エラーメッセージをリクエストスコープに保存する
-			request.setAttribute("errorMsg", "つぶやきが入力されていません");
+			session.setAttribute("errorMsg", "つぶやきが入力されていません");
 			//属性名errorMsgのString型インスタンスが保存された状態
 		}
 		
 		// つぶやきリストを取得してリクエストスコープに保存
 		GetMutterListLogic gmll = new GetMutterListLogic();
 		List<Mutter> mutterList = gmll.execute();
-		request.setAttribute("mutterList", mutterList);
+		session.setAttribute("mutterList", mutterList);
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/main.jsp");
 		dispatcher.forward(request, response);

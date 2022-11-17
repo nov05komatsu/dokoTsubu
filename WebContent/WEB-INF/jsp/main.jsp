@@ -7,22 +7,25 @@
 <head>
 <meta charset="UTF-8">
 <title>どこつぶ</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="/dokoTsubu/js/postMutter.js"></script>
 </head>
 <body>
 <p><c:out value="${loginUser.name}" />さん、ログイン中</p>
 <a href="/dokoTsubu/Logout">ログアウト</a>
 <p><a href="/dokoTsubu/Main">更新</a></p>
-<form action="/dokoTsubu/Main" method="post">
-<input type="text" name="text">
-<input type="submit" value="つぶやく">
-</form><br>
+<div class="postMutterBox">
+	<input id="postMutterText" type="text" name="text">
+	<button id="postMutterButton">つぶやく</button>
+</div>
+<br>
 <a href="/dokoTsubu/RemoveMutter"><button>つぶやきを削除する</button></a>
 <c:if test="${not empty errorMsg}">${errorMsg}</c:if>
 <!-- <c:if test="${not empty buildedText}">${buildedText}</c:if> -->
 <c:choose>
 <c:when test="${not empty mutterList}">
 <form action="#">
-	<ul>
+	<ul class="mutterList">
 	<c:forEach var="mutter" items="${mutterList}">
 		<li>
 		<c:out value="${mutter.date} ${mutter.userName} ${mutter.text}"/>
