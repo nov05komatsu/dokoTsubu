@@ -5,12 +5,12 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>どこつぶ</title>
+<title>どこつぶ管理者ページ</title>
 </head>
 <body> 
 <c:choose>
 	<c:when test="${empty mutterList}">
-		<p style="color:red">つぶやきはありません</p>
+		<p style="color:red">現在表示中のつぶやきはありません</p>
 		<a href="/dokoTsubu/Admin"><button>戻る</button></a>
 	</c:when>
 	<c:otherwise>
