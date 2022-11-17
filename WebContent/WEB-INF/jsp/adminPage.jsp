@@ -13,7 +13,6 @@
 <a href="/dokoTsubu/Logout">ログアウト</a>
 <a href="/dokoTsubu/RemoveMutterAdmin"><button>つぶやきを削除する</button></a>
 <c:if test="${not empty errorMsg}">${errorMsg}</c:if>
-<!-- <c:if test="${not empty buildedText}">${buildedText}</c:if> -->
 <p style="font-size:1.5rem">ユーザーリスト</p>
 <table>
 <tr>
@@ -37,6 +36,8 @@
 	<ul>
 	<c:forEach var="mutter" items="${mutterList}">
 		<li>
+		<c:if test="${mutter.del == 1}"><span style="color:red">非表示</span></c:if>
+		<!-- 非表示フラグ:<c:out value="${mutter.del}"/>:  -->
 		<c:out value="${mutter.date} ${mutter.userName} ${mutter.text} good:${mutter.good}"/>
 		</li>
 	</c:forEach>

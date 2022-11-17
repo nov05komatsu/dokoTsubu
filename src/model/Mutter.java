@@ -27,6 +27,7 @@ public class Mutter implements Serializable {
 		this.userName = userName;
 		this.text = text;
 		this.date = date;
+		this.del = del;
 		this.good = good;
 	}
 	
