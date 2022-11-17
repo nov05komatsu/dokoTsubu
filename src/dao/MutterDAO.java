@@ -21,7 +21,7 @@ public class MutterDAO {
 		
 		// データベース接続
 		try(Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)){
-			String sql = "SELECT ID, NAME, TEXT, DATE, GOOD FROM MUTTER WHERE DEL = 1 ORDER BY ID DESC";
+			String sql = "SELECT ID, NAME, TEXT, DATE, DEL, GOOD FROM MUTTER WHERE DEL = 0 ORDER BY ID DESC";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			
 			// SELECTを実行
@@ -33,8 +33,9 @@ public class MutterDAO {
 				String name = rs.getString("NAME");
 				String text = rs.getString("TEXT");
 				String date = rs.getString("DATE");
+				int del = rs.getInt("DEL");
 				int good = rs.getInt("GOOD");
-				Mutter mutter = new Mutter(id, name, text, date, good);
+				Mutter mutter = new Mutter(id, name, text, date, del, good);
 				mutterList.add(mutter);
 			}
 		} catch (SQLException e) {
@@ -61,8 +62,9 @@ public class MutterDAO {
 				String name = rs.getString("NAME");
 				String text = rs.getString("TEXT");
 				String date = rs.getString("DATE");
+				int del = rs.getInt("DEL");
 				int good = rs.getInt("GOOD");
-				Mutter mutter = new Mutter(id, name, text, date, good);
+				Mutter mutter = new Mutter(id, name, text, date, del, good);
 				mutterList.add(mutter);
 			}
 		} catch (SQLException e) {
@@ -100,7 +102,7 @@ public class MutterDAO {
 		
 		// データベース接続
 		try(Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)){
-			String sql = "SELECT ID, NAME, TEXT, DATE, GOOD FROM MUTTER WHERE NAME LIKE ? AND DEL = 1 ORDER BY ID DESC";
+			String sql = "SELECT ID, NAME, TEXT, DATE, DEL, GOOD FROM MUTTER WHERE NAME LIKE ? AND DEL = 0 ORDER BY ID DESC";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1, userName);
 			
@@ -113,8 +115,9 @@ public class MutterDAO {
 				String name = rs.getString("NAME");
 				String text = rs.getString("TEXT");
 				String date = rs.getString("DATE");
+				int del = rs.getInt("DEL");
 				int good = rs.getInt("GOOD");
-				Mutter mutter = new Mutter(id, name, text, date, good);
+				Mutter mutter = new Mutter(id, name, text, date, del, good);
 				mutterList.add(mutter);
 			}
 		} catch (SQLException e) {
@@ -127,7 +130,7 @@ public class MutterDAO {
 	public void removeMutter(String[] ary) {
 		// データベース接続
 		try(Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)){
-			String sql = "UPDATE MUTTER SET DEL = 0 WHERE ID = ?";
+			String sql = "UPDATE MUTTER SET DEL = 1 WHERE ID = ?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			
 			// ArrayList.remove()を使っていた名残で後ろから消してる

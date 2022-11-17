@@ -37,7 +37,7 @@
 	<ul>
 	<c:forEach var="mutter" items="${mutterList}">
 		<li>
-		<c:out value="${mutter.date} ${mutter.userName} ${mutter.date} good:${mutter.good}"/>
+		<c:out value="${mutter.date} ${mutter.userName} ${mutter.text} good:${mutter.good}"/>
 		</li>
 	</c:forEach>
 	</ul>
