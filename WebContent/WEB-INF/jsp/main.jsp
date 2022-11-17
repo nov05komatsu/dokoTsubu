@@ -7,6 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>どこつぶ</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="/dokoTsubu/js/good.js"></script>
 </head>
 <body>
 <p><c:out value="${loginUser.name}" />さん、ログイン中</p>
@@ -21,17 +23,15 @@
 <!-- <c:if test="${not empty buildedText}">${buildedText}</c:if> -->
 <c:choose>
 <c:when test="${not empty mutterList}">
-<form action="#">
-	<ul>
+	<ul class="mutterList">
 	<c:forEach var="mutter" items="${mutterList}">
 		<li>
 		<c:out value="${mutter.date} ${mutter.userName} ${mutter.text}"/>
-        <button type="submit" value="<c:out value="${mutter.id}"/>">good</button>
-        <c:out value="${mutter.good}"/>        
+        <button class="goodButton" type="submit" value="<c:out value="${mutter.id}"/>">good</button>
+        <span ><c:out value="${mutter.good}"/></span>        
 		</li>
 	</c:forEach>
 	</ul>
-</form>
 </c:when>
 <c:otherwise>
 	<p>現在つぶやきはありません</p>
