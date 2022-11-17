@@ -18,6 +18,8 @@ public class User implements Serializable {
 		this.pass = pass;
 	}
 	
+	public void setId(int id) { this.id = id; }
+	
 	public int getId() { return this.id; }
 	public String getName() { return this.name; }
 	public String getPass() { return this.pass; }

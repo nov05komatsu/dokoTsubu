@@ -12,25 +12,28 @@ public class GoodDAO {
 	private final String DB_USER = "sa";
 	private final String DB_PASS = "";
 	
-	public boolean checkGoodList(int id) {
+	public boolean checkGoodList(int user_id, int mutter_id) {
 		
 		try(Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)){
-			String sql = "SELECT mutter_id FROM goodlist";
+			String sql = "SELECT mutter_id FROM "
+					+ "user_id_"
+					+ user_id
+					+ "_goodlist";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			ResultSet rs = pStmt.executeQuery();
 			while(rs.next()) {
-				int mutter_id = rs.getInt("mutter_id");
-				if(id == mutter_id) {
+				int search_id = rs.getInt("mutter_id");
+				if(mutter_id == search_id) {
 					return false;
 				}
 			}
 			String sql01 = "SELECT good FROM mutterlist WHERE id = ?";
 			PreparedStatement pStmt01 = conn.prepareStatement(sql01);
-			pStmt01.setInt(1, id);
+			pStmt01.setInt(1, mutter_id);
 			
 			String sql02 = "UPDATE mutterlist SET good = ? WHERE id = ?";
 			PreparedStatement pStmt02 = conn.prepareStatement(sql02);
-			pStmt02.setInt(2, id);
+			pStmt02.setInt(2, mutter_id);
 			
 			rs = pStmt.executeQuery();
 			while(rs.next()) {

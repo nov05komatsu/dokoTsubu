@@ -14,6 +14,7 @@ public class LoginLogic {
 		for(User listedUser : userList) {
 			if(user.getName().equals(listedUser.getName())) {
 				if(user.getPass().equals(listedUser.getPass())){
+					user.setId(listedUser.getId());
 					return true;
 				} else {
 					return false;
