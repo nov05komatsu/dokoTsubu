@@ -30,7 +30,7 @@ public class RemoveMutterAdmin extends HttpServlet {
 		String[] ary = request.getParameterValues("list");
 		MutterDAO dao = new MutterDAO();
 		dao.removeMutter(ary);		
-		List<Mutter> mutterList = dao.findAll();
+		List<Mutter> mutterList = dao.findAllAdmin();
 		request.setAttribute("mutterList", mutterList);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/adminPage.jsp");
 		dispatcher.forward(request, response);
