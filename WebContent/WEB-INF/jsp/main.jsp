@@ -28,7 +28,7 @@
 		<li>
 		<c:out value="${mutter.date} ${mutter.userName} ${mutter.text}"/>
         <button class="goodButton" type="submit" value="<c:out value="${mutter.id}"/>">good</button>
-        <span ><c:out value="${mutter.good}"/></span>        
+        <span><c:out value="${mutter.good}"/></span>        
 		</li>
 	</c:forEach>
 	</ul>

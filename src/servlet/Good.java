@@ -36,7 +36,8 @@ public class Good extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String val = request.getParameter("mutterId");
+		int val = Integer.parseInt(request.getParameter("good"));
+		val += 1;
 		
 		PrintWriter out = response.getWriter();
 		out.print(val);

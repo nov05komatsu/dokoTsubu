@@ -66,6 +66,7 @@ public class UserDAO {
 	}
 	
 	// できれば戻り値を真偽値にして使いたい
+	/******
 	public void createTable(User user) {
 		
 		try(Connection conn = DriverManager.getConnection(
@@ -89,6 +90,7 @@ public class UserDAO {
 			e.printStackTrace();
 		}
 	}
+	*****/
 	
 	public boolean checkTable() {
 		

@@ -15,5 +15,6 @@
 	</ul>
 	<input type="submit" value="ログイン">
 </form>
+<a href="/dokoTsubu/">戻る</a>
 </body>
 </html>

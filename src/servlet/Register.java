@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import dao.UserDAO;
 import model.RegisterLogic;
 import model.User;
+import model.ValueCheckLogic;
 
 /**
  * Servlet implementation class Register
@@ -27,25 +29,32 @@ public class Register extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String name = request.getParameter("name");
-		String pass = request.getParameter("pass");
+		String name = request.getParameter("name").trim();
+		String pass = request.getParameter("pass").trim();
+		String forwardPath = "/WEB-INF/jsp/info.jsp";
 		
-		UserDAO dao = new UserDAO();		
-		List<User> userList = dao.findAll();
-		User user = new User(name, pass);
+		ValueCheckLogic vcl = new ValueCheckLogic();
+		ArrayList<String> eMessage = vcl.execute(name, pass);
 		
-		RegisterLogic rl = new RegisterLogic();
-		if(!rl.execute(name, userList)) {
-			request.setAttribute("msg", "そのユーザー名はすでに使用されています。");
+		if(eMessage.size() != 0) {
+			request.setAttribute("eMessage", eMessage);
+			forwardPath = "/WEB-INF/jsp/register.jsp";
 		} else {
-			if(dao.create(user)) {
+			UserDAO dao = new UserDAO();		
+			List<User> userList = dao.findAll();
+			User user = new User(name, pass);
+			
+			RegisterLogic rl = new RegisterLogic();
+			if(!rl.execute(name, userList)) {
+				eMessage.add("そのユーザー名はすでに使用されています");
+				request.setAttribute("eMessage", eMessage);
+				forwardPath = "/WEB-INF/jsp/register.jsp";
+			} else if(dao.create(user)) {
 				request.setAttribute("msg", "登録が完了しました。");
 			}
-			userList = dao.findAll();
 		}
-		
-		dao.createTable(user);
-		RequestDispatcher dispathcer = request.getRequestDispatcher("/WEB-INF/jsp/info.jsp");
+
+		RequestDispatcher dispathcer = request.getRequestDispatcher(forwardPath);
 		dispathcer.forward(request, response);
-		}
+	}
 }
