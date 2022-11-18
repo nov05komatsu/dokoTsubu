@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dao.MutterDAO;
+
 /**
  * Servlet implementation class Good
  */
@@ -29,19 +31,23 @@ public class Good extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int val = Integer.parseInt(request.getParameter("good"));
-		val += 1;
+		int mutterId = Integer.parseInt(request.getParameter("mutterId"));
+		int good = Integer.parseInt(request.getParameter("good"));
+		
+		MutterDAO dao = new MutterDAO();
+		good = dao.goodSum(mutterId, good);
 		
 		PrintWriter out = response.getWriter();
-		out.print(val);
+		out.print(good);
 		out.close();
+		
+		
 		
 		return;
 	}

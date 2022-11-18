@@ -187,4 +187,21 @@ public class MutterDAO {
 			e.printStackTrace();
 		}
 	}
+	
+	public int goodSum(int mutterId, int good) {
+		
+		try(Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)){
+			
+			String sql = "UPDATE mutter SET GOOD = ? WHERE ID = ?";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			
+			pStmt.setInt(1, good + 1);
+			pStmt.setInt(2, mutterId);
+			pStmt.execute();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return good + 1;
+	}
 }
