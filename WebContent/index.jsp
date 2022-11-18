@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -8,6 +9,11 @@
 </head>
 <body>
 <h1>どこつぶへようこそ</h1>
+<c:if test="${not empty eMessage}">
+	<c:forEach var="ems" items="${eMessage}">
+		<p style="color:red"><c:out value="${ems}"/></p>
+	</c:forEach>
+</c:if>
 <form action="/dokoTsubu/Login" method="post">
 	<ul>
 		<li>ユーザー名：<input type="text" name="name"></li>

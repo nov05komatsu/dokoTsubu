@@ -21,11 +21,6 @@ public class Main extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//つぶやきリストを取得してリクエストスコープに保存
-		GetMutterListLogic gmll = new GetMutterListLogic();
-		List<Mutter> mutterList = gmll.execute();
-		request.setAttribute("mutterList", mutterList);
-		
 		// ログイン状態の確認
 		HttpSession session = request.getSession();
 		User loginUser = (User) session.getAttribute("loginUser");
@@ -37,6 +32,11 @@ public class Main extends HttpServlet {
 		}
 		// ログイン情報が入っていれば、メイン画面にフォワードする
 		else {
+			//つぶやきリストを取得してリクエストスコープに保存
+			GetMutterListLogic gmll = new GetMutterListLogic();
+			List<Mutter> mutterList = gmll.execute();
+			request.setAttribute("mutterList", mutterList);
+			
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/main.jsp");
 			dispatcher.forward(request, response);
 		}

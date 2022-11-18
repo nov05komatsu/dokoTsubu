@@ -13,11 +13,25 @@ public class ValueCheckLogic {
 			eMessage.add("名前が入力されていません。");
 		}
 		
-		if(pass == null) {
+		if(pass == null || pass == "") {
 			eMessage.add("パスワードが入力されていません");
 		} else if (!ptn.matcher(pass).matches()) {
 			eMessage.add("パスワードは半角英数字8文字以上で登録してください");
 		}
+		return eMessage;
+	}
+	
+	public ArrayList<String> loginValueCheck(String name, String pass) {
+		ArrayList<String> eMessage = new ArrayList<>();
+		
+		if(name == null || name == "") {
+			eMessage.add("名前が入力されていません。");
+		}
+		
+		if(pass == null || pass == "") {
+			eMessage.add("パスワードが入力されていません");
+		}
+		
 		return eMessage;
 	}
 }
