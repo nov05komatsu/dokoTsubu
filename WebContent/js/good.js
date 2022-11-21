@@ -1,5 +1,5 @@
 $(function(){
-	// goodを増やした時の処理関数
+	// goodを増やした時の処理関数,cancelボタンに変更する
 	let setCancel = function(){
 		// イベントをいったん消去
 		$(this).off('click');
@@ -16,7 +16,7 @@ $(function(){
 		// 新たにイベントをつけなおす
 		$(this).on('click', setGood);
 		
-		// 非同期通信
+		// 非同期通信 将来的にはJSON使って
 		$.ajax({
 			url: "/dokoTsubu/Good",
 			type: "POST",
@@ -33,7 +33,7 @@ $(function(){
 		});
 	}
 	
-	// cancelした時の処理関数
+	// cancelした時の処理関数,goodボタンを復活させる
 	let setGood = function(){
 		// イベントをいったん消去
 		$(this).off('click');

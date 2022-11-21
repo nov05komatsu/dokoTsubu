@@ -9,11 +9,11 @@ public class ValueCheckLogic {
 		Pattern ptn = Pattern.compile("[0-9a-zA-Z]{8,}");
 		ArrayList<String> eMessage = new ArrayList<>();
 		
-		if(name == null || name == "") {
+		if(name == null || name.equals("")) {
 			eMessage.add("名前が入力されていません。");
 		}
 		
-		if(pass == null || pass == "") {
+		if(pass == null || pass.equals("")) {
 			eMessage.add("パスワードが入力されていません");
 		} else if (!ptn.matcher(pass).matches()) {
 			eMessage.add("パスワードは半角英数字8文字以上で登録してください");
@@ -24,11 +24,11 @@ public class ValueCheckLogic {
 	public ArrayList<String> loginValueCheck(String name, String pass) {
 		ArrayList<String> eMessage = new ArrayList<>();
 		
-		if(name == null || name == "") {
+		if(name == null || name.equals("")) {
 			eMessage.add("名前が入力されていません。");
 		}
 		
-		if(pass == null || pass == "") {
+		if(pass == null || pass.equals("")) {
 			eMessage.add("パスワードが入力されていません");
 		}
 		
