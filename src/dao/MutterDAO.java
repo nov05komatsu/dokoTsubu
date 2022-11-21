@@ -192,16 +192,24 @@ public class MutterDAO {
 		
 		try(Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)){
 			
-			String sql = "UPDATE mutter SET GOOD = ? WHERE ID = ?";
-			PreparedStatement pStmt = conn.prepareStatement(sql);
+			String sql01 = "SELECT id, good FROM mutter WHERE ID = ?";
+			PreparedStatement pStmt01 = conn.prepareStatement(sql01);
+			pStmt01.setInt(1, mutterId);
+			ResultSet rs = pStmt01.executeQuery();
+			if(rs.next()) {
+				good += rs.getInt("good");
+			}
 			
-			pStmt.setInt(1, good + 1);
-			pStmt.setInt(2, mutterId);
-			pStmt.execute();
+			String sql02 = "UPDATE mutter SET GOOD = ? WHERE ID = ?";
+			PreparedStatement pStmt02 = conn.prepareStatement(sql02);
+			
+			pStmt02.setInt(1, good);
+			pStmt02.setInt(2, mutterId);
+			pStmt02.execute();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return good + 1;
+		return good;
 	}
 }
