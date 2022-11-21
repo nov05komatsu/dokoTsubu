@@ -8,7 +8,7 @@ $(function(){
 		let g = $(this).next('.goodSum');
 		
 		// ボタンの表示を変更		
-		$(this).text('cancel');
+		$(this).text('cancel').css('color', 'red');
 		
 		// クラスの付け替え
 		$(this).toggleClass('goodButton cancelButton');
@@ -26,7 +26,7 @@ $(function(){
 			}
 		}).done(function(result){
 			console.log(result);
-			g.text(result);
+			g.text(result).css('color', 'red');
 			
 		}).fail(function(){
 			
@@ -42,7 +42,7 @@ $(function(){
 		let g = $(this).next('.goodSum');
 		
 		// ボタンの表示を戻す		
-		$(this).text('good');
+		$(this).text('good').css('color','black');
 		
 		// クラスの付け替え
 		$(this).toggleClass('cancelButton goodButton');
@@ -60,7 +60,7 @@ $(function(){
 			}
 		}).done(function(result){
 			console.log(result);
-			g.text(result);
+			g.text(result).css('color','black');
 			
 		}).fail(function(){
 			
