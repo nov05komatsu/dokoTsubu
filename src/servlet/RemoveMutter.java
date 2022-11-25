@@ -19,6 +19,7 @@ import model.User;
 public class RemoveMutter extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
+	//つぶやき削除ページに来た時の処理、自身のつぶやきのみを抽出して表示させたい
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String forwardPath = "/WEB-INF/jsp/removeMutter.jsp";
 		HttpSession session = request.getSession();
@@ -30,30 +31,17 @@ public class RemoveMutter extends HttpServlet {
 		dispatcher.forward(request, response);		
 	}
 	
+	//削除ページにてつぶやきを選択し、削除するボタンを押したときの処理
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		//<input type="checkbox" name="list" value="<c:out value="${mutter.id}"/>">
+		//選択されたつぶやきの番号(mutter.id)を元に処理を実行する
 		String[] ary = request.getParameterValues("list");
 		MutterDAO dao = new MutterDAO();
 		dao.removeMutter(ary);		
 		List<Mutter> mutterList = dao.findAll();
 		
-		// 失敗の歴史
-		/* removeによって配列が短くなる。次の(i)が存在しなくなる。
-		for(String s : ary) {
-			int i = Integer.parseInt(s);
-			mutterList.remove(i);
-		}*/		
-		
-		/* つぶやきのテキスト情報を元に処理,失敗
-		for(Mutter mutter : mutterList) {
-			for(String s : arrayList) {
-				if(mutter.getText().equals(s)) {
-					mutterList.remove(mutter);
-				}
-			}
-		}
-		*/
-		// 失敗の歴史ここまで
-		
+		//処理後のつぶやきをリストを新たにスコープに
 		request.setAttribute("mutterList", mutterList);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/main.jsp");
 		dispatcher.forward(request, response);

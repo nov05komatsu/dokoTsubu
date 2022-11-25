@@ -11,28 +11,28 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dao.MutterDAO;
 import model.GetMutterListLogic;
 import model.Mutter;
-import model.PostMutterLogic;
 import model.User;
 
 @WebServlet("/Main")
 public class Main extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
+	// ログイン状態によって処理を分ける
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// ログイン状態の確認
+		// ログイン情報の取得
 		HttpSession session = request.getSession();
 		User loginUser = (User) session.getAttribute("loginUser");
 		
-		// 取得したUserインスタンスをチェック
 		// ログイン情報が入っていなければ、ログイン画面へリダイレクト
 		if(loginUser == null) {
 			response.sendRedirect("/dokoTsubu/");
 		}
-		// ログイン情報が入っていれば、メイン画面にフォワードする
+		// ログイン情報が入っていれば、メイン画面にフォワード
 		else {
-			//つぶやきリストを取得してリクエストスコープに保存
+			//つぶやきリストを取得してリクエストスコープへ
 			GetMutterListLogic gmll = new GetMutterListLogic();
 			List<Mutter> mutterList = gmll.execute();
 			request.setAttribute("mutterList", mutterList);
@@ -42,29 +42,27 @@ public class Main extends HttpServlet {
 		}
 	}
 	
+	// メイン画面でつぶやきを投稿したときの処理
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// postされた値を使う準備
+		// postされた値を使う準備、filterを設定しておくのも良い？
 		request.setCharacterEncoding("UTF-8");
-		// trim()しないと半角スペースだけのつぶやきも通る
+		// trim()していなかったので空白だけのつぶやきも通っていた
 		String text = request.getParameter("text").trim();
 		
-		// 入力値のチェックと処理
+		// 空白を除いて1文字以上のテキストがある場合
 		if(text != null && text.length() != 0) {
-			// セッションスコープを使うのでHttpSessionインスタンスを取得
+			//つぶやきに付与するユーザー情報の取得
 			HttpSession session = request.getSession();
-			// セッションスコープ内の属性名loginUserのインスタンスを取得
 			User loginUser = (User)session.getAttribute("loginUser");
 			
-			// つぶやき情報を保持する新たなインスタンスを生成する
+			//つぶやきインスタンス生成し、投稿する
 			Mutter mutter = new Mutter(loginUser.getName(), text);
-			// つぶやきを投稿する処理モデルのインスタンスを生成する
-			PostMutterLogic postMutterLogic = new PostMutterLogic();
-			// 処理の実行、リストの先頭につぶやき情報インスタンスが入る
-			postMutterLogic.execute(mutter);
+			// 直接DAOを呼び出さずにLogicを挟むべきか
+			MutterDAO dao = new MutterDAO();
+			dao.create(mutter);
 		} else {
-			//エラーメッセージをリクエストスコープに保存する
+			//メイン画面に表示するエラーメッセージをリクエストスコープに保存しておく
 			request.setAttribute("errorMsg", "つぶやきが入力されていません");
-			//属性名errorMsgのString型インスタンスが保存された状態
 		}
 		
 		// つぶやきリストを取得してリクエストスコープに保存
@@ -72,6 +70,7 @@ public class Main extends HttpServlet {
 		List<Mutter> mutterList = gmll.execute();
 		request.setAttribute("mutterList", mutterList);
 		
+		//再びメイン画面へ
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/main.jsp");
 		dispatcher.forward(request, response);
 	}
