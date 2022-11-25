@@ -7,9 +7,11 @@
 <head>
 <meta charset="UTF-8">
 <title>どこつぶ</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="/dokoTsubu/js/good.js"></script>
 </head>
 <body>
-<p><c:out value="${loginUser.name}" />さん、ログイン中</p>
+<p class="userName"><c:out value="${loginUser.name}" />さん、ログイン中</p>
 <a href="/dokoTsubu/Logout">ログアウト</a>
 <p><a href="/dokoTsubu/Main">更新</a></p>
 <form action="/dokoTsubu/Main" method="post">
@@ -21,17 +23,15 @@
 <!-- <c:if test="${not empty buildedText}">${buildedText}</c:if> -->
 <c:choose>
 <c:when test="${not empty mutterList}">
-<form action="/dokoTsubu/Good" method="post">
-	<ul>
+	<ul class="mutterList">
 	<c:forEach var="mutter" items="${mutterList}">
 		<li>
-		<c:out value="${mutter.date} ${mutter.userName} ${mutter.date}"/>
-		<button type="submit" name="mutter_id" value="<c:out value="${mutter.id}"/>">good</button>
-		<c:out value="${mutter.good}"/>		
+		<c:out value="${mutter.date} ${mutter.userName} ${mutter.text}"/>
+        <button class="goodButton" type="submit" value="<c:out value="${mutter.id}"/>">good</button>
+        <span class="goodSum"><c:out value="${mutter.good}"/></span>        
 		</li>
 	</c:forEach>
 	</ul>
-</form>
 </c:when>
 <c:otherwise>
 	<p>現在つぶやきはありません</p>

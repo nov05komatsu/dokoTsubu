@@ -10,10 +10,10 @@
 </head>
 <body>
 <p><c:out value="${loginUser.name}"/>でログイン中</p>
-<a href="/dokoTsubu/Logout">ログアウト</a>
-<a href="/dokoTsubu/RemoveMutterAdmin"><button>つぶやきを削除する</button></a>
+<a href="/dokoTsubu/Logout">ログアウト</a><br />
+<p><a href="/dokoTsubu/RemoveMutterAdmin"><button>つぶやきを非表示にする</button></a><br></p>
+<p><a href="/dokoTsubu/VisibleMutterAdmin"><button>非表示のつぶやきを表示させる</button></a></p>
 <c:if test="${not empty errorMsg}">${errorMsg}</c:if>
-<!-- <c:if test="${not empty buildedText}">${buildedText}</c:if> -->
 <p style="font-size:1.5rem">ユーザーリスト</p>
 <table>
 <tr>
@@ -37,7 +37,9 @@
 	<ul>
 	<c:forEach var="mutter" items="${mutterList}">
 		<li>
-		<c:out value="${mutter.date} ${mutter.userName} ${mutter.date} good:${mutter.good}"/>
+		<c:if test="${mutter.del == 1}"><span style="color:red">非表示</span></c:if>
+		<!-- 非表示フラグ:<c:out value="${mutter.del}"/>:  -->
+		<c:out value="${mutter.date} ${mutter.userName} ${mutter.text} good:${mutter.good}"/>
 		</li>
 	</c:forEach>
 	</ul>

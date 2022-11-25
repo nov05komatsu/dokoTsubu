@@ -3,12 +3,6 @@ package model;
 import java.util.List;
 
 public class LoginLogic {
-	public boolean execute(User user) {
-		if(user.getPass().equals("1234")) {
-			return true;
-		}
-		return false;
-	}
 	
 	public boolean execute(User user, List<User> userList) {
 		for(User listedUser : userList) {

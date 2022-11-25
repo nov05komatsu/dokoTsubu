@@ -13,14 +13,14 @@ import javax.servlet.http.HttpServletResponse;
 import dao.MutterDAO;
 import model.Mutter;
 
-@WebServlet("/RemoveMutterAdmin")
-public class RemoveMutterAdmin extends HttpServlet {
+@WebServlet("/VisibleMutterAdmin")
+public class VisibleMutterAdmin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String forwardPath = "/WEB-INF/jsp/removeMutterAdmin.jsp";
+		String forwardPath = "/WEB-INF/jsp/visibleMutterAdmin.jsp";
 		MutterDAO dao = new MutterDAO();
-		List<Mutter> mutterList = dao.findAll();
+		List<Mutter> mutterList = dao.findInvisible();
 		request.setAttribute("mutterList", mutterList);
 		RequestDispatcher dispatcher = request.getRequestDispatcher(forwardPath);
 		dispatcher.forward(request, response);		
@@ -29,7 +29,7 @@ public class RemoveMutterAdmin extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String[] ary = request.getParameterValues("list");
 		MutterDAO dao = new MutterDAO();
-		dao.removeMutter(ary);		
+		dao.visibleMutter(ary);		
 		List<Mutter> mutterList = dao.findAllAdmin();
 		request.setAttribute("mutterList", mutterList);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/adminPage.jsp");

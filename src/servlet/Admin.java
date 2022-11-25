@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -13,7 +14,6 @@ import javax.servlet.http.HttpSession;
 
 import dao.MutterDAO;
 import dao.UserDAO;
-import model.LoginLogic;
 import model.Mutter;
 import model.User;
 
@@ -23,6 +23,7 @@ import model.User;
 @WebServlet("/Admin")
 public class Admin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final String ADMIN_NAME = "admin";
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
@@ -38,9 +39,9 @@ public class Admin extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		String name = request.getParameter("name");
-		String pass = request.getParameter("pass");
-		String forwardPath = "/WEB-INF/jsp/adminPage.jsp";
+		String name = request.getParameter("name").trim();
+		String pass = request.getParameter("pass").trim();
+		String forwardPath = "/WEB-INF/jsp/adminLogin.jsp";
 		
 		// セッションスコープの初期化
 		HttpSession sessionCheck = request.getSession();
@@ -48,27 +49,39 @@ public class Admin extends HttpServlet {
 			sessionCheck.invalidate();
 		}
 		
-		UserDAO dao = new UserDAO();
-		List<User> userList = dao.findAll();
+		//入力情報に誤りがあればトップへ
+		ArrayList<String> eMessage = new ArrayList<>();
 		
-		// ユーザー情報のインスタンスを生成
-		User user = new User(name, pass);
+		if((name != "" && name != null) && (pass != "" && pass != null)) {
+			User user = null;
+			UserDAO dao = new UserDAO();
+			MutterDAO mdao = new MutterDAO();
+			
+			if(name.equals(ADMIN_NAME)) {
+				user = dao.findUser(name, pass);				
+			}
 		
-		LoginLogic logic = new LoginLogic();
-		boolean isLogin = logic.executeAdmin(user, userList);
-		
-		if(isLogin) {
-			HttpSession session = request.getSession();
-			session.setAttribute("loginUser", user);
-			session.setAttribute("userList", userList);
-			MutterDAO mDao = new MutterDAO();
-			List<Mutter> mutterList = mDao.findAllAdmin();
-			session.setAttribute("mutterList", mutterList);
+			if(user != null) {
+				HttpSession session = request.getSession();
+				List<User> userList = dao.findAll();
+				List<Mutter> mutterList = mdao.findAllAdmin();				
+				session.setAttribute("loginUser", user);
+				session.setAttribute("userList", userList);
+				session.setAttribute("mutterList", mutterList);
+				forwardPath = "/WEB-INF/jsp/adminPage.jsp";
+			} else {
+				eMessage.add("管理者名とパスワードが一致しません");
+			}
 		} else {
-			request.setAttribute("msg", "入力情報に誤りがあります");
-			forwardPath = "/WEB-INF/jsp/info.jsp";
+			if(name == "" || name == null) {
+				eMessage.add("管理者名を入力してください");
+			}
+			if(pass == "" || pass == null) {
+				eMessage.add("パスワードを入力してください");
+			}
 		}
-		
+
+		request.setAttribute("eMessage", eMessage);
 		RequestDispatcher dispatcher = request.getRequestDispatcher(forwardPath);
 		dispatcher.forward(request, response);
 	}

@@ -9,6 +9,7 @@ public class Mutter implements Serializable {
 	private String userName;
 	private String text;
 	private String date;
+	private int del;
 	private int good = 0;
 	
 	public Mutter() {}
@@ -21,11 +22,12 @@ public class Mutter implements Serializable {
 		var f = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
 		this.date = f.format(d);
 	}
-	public Mutter(int id, String userName, String text, String date, int good) {
+	public Mutter(int id, String userName, String text, String date, int del, int good) {
 		this.id = id;
 		this.userName = userName;
 		this.text = text;
 		this.date = date;
+		this.del = del;
 		this.good = good;
 	}
 	
@@ -40,6 +42,9 @@ public class Mutter implements Serializable {
 	}
 	public String getDate() {
 		return date;
+	}
+	public int getDel() {
+		return del;
 	}
 	public int getGood() {
 		return good;

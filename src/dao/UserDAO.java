@@ -42,6 +42,32 @@ public class UserDAO {
 		return userList;
 	}
 	
+	public User findUser(String name, String pass) {
+		User user = null;
+		
+		try(Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)){
+			String sql = "SELECT id, name, pass FROM userlist WHERE name LIKE ? AND pass LIKE ?";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, name);
+			pStmt.setString(2, pass);
+			
+			// executeUpdateでうまく動いてくれなかったので
+			// ResultSetが0行の場合、.nexe()はfalseを返すはずなので
+			// SQL文の実行結果が0件であれば、Userインスタンスは生成されずnullのまま
+			ResultSet rs = pStmt.executeQuery();
+			while(rs.next()) {
+				user = new User(
+						rs.getInt("id"),
+						rs.getString("name"),
+						rs.getString("pass")
+						);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return user;
+	}
+	
 	public boolean create(User user) {
 		// データベース接続
 		try(Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)){
@@ -66,6 +92,7 @@ public class UserDAO {
 	}
 	
 	// できれば戻り値を真偽値にして使いたい
+	/******
 	public void createTable(User user) {
 		
 		try(Connection conn = DriverManager.getConnection(
@@ -89,6 +116,7 @@ public class UserDAO {
 			e.printStackTrace();
 		}
 	}
+	*****/
 	
 	public boolean checkTable() {
 		

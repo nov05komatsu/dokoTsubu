@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>どこつぶ</title>
+<script src="/dokoTsubu/js/checkboxAll.js"></script>
 </head>
 <body> 
 <c:choose>
@@ -15,11 +16,14 @@
 	</c:when>
 	<c:otherwise>
 		<p>どのつぶやきを削除しますか？</p>
-		<form action="/dokoTsubu/RemoveMutter" method="post">
+		<p><input type="button" value="すべて選択" onclick="allCheck(true)"></p>
+		<p><input type="button" value="すべての選択を解除" onclick="allCheck(false)"></p>
+		<form action="/dokoTsubu/RemoveMutter" method="post" name="mutterList">
 			<c:forEach var="mutter" items="${mutterList}">
-				<p><input type="checkbox" name="list" value="<c:out value="${mutter.id}"/>">
-				<c:out value="${mutter.date}"/>
-				<c:out value="${mutter.userName }"/>:<c:out value="${mutter.text}"/></p>
+				<p>
+					<input type="checkbox" name="list" value="<c:out value="${mutter.id}"/>">
+					<c:out value="${mutter.date} ${mutter.userName} ${mutter.text} good:${mutter.good}"/>
+				</p>
 			</c:forEach>
 		<input type="submit" value="削除する"><br>
 		</form>
