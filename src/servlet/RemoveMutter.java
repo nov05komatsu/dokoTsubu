@@ -41,7 +41,7 @@ public class RemoveMutter extends HttpServlet {
 		dao.removeMutter(ary);		
 		List<Mutter> mutterList = dao.findAll();
 		
-		//処理後のつぶやきをリストを新たにスコープに
+		//処理後のつぶやきリストを新たにスコープに
 		request.setAttribute("mutterList", mutterList);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/main.jsp");
 		dispatcher.forward(request, response);
