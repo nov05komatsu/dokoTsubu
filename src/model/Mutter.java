@@ -10,7 +10,7 @@ public class Mutter implements Serializable {
 	private String text;
 	private String date;
 	private int del;
-	private int good = 0;
+	private int good;
 	
 	public Mutter() {}
 	public Mutter(String userName, String text) {
@@ -49,5 +49,4 @@ public class Mutter implements Serializable {
 	public int getGood() {
 		return good;
 	}
-	
 }

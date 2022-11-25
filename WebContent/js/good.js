@@ -1,6 +1,6 @@
 $(function(){
-	// goodを増やした時の処理関数,cancelボタンに変更する
-	let setCancel = function(){
+	// goodを増やして、ボタンをキャンセルボタンに変える処理
+	let addGood = function(){
 		// イベントをいったん消去
 		$(this).off('click');
 		
@@ -14,7 +14,7 @@ $(function(){
 		$(this).toggleClass('goodButton cancelButton');
 		
 		// 新たにイベントをつけなおす
-		$(this).on('click', setGood);
+		$(this).on('click', removeGood);
 		
 		// 非同期通信 将来的にはJSON使って
 		$.ajax({
@@ -33,8 +33,8 @@ $(function(){
 		});
 	}
 	
-	// cancelした時の処理関数,goodボタンを復活させる
-	let setGood = function(){
+	// goodを減らしてgoodボタンを復活させる処理
+	let removeGood = function(){
 		// イベントをいったん消去
 		$(this).off('click');
 		
@@ -48,7 +48,7 @@ $(function(){
 		$(this).toggleClass('cancelButton goodButton');
 		
 		// 新たにイベントをつけなおす
-		$(this).on('click', setCancel);
+		$(this).on('click', addGood);
 		
 		// 非同期通信
 		$.ajax({
@@ -67,8 +67,9 @@ $(function(){
 		});
 	}
 	
+	// goodボタンを押したらgoodを増やす
+	$('.goodButton').on('click', addGood);
 	
-	$('.goodButton').on('click', setCancel);
-	
-	$('.cancelButton').on('click', setGood);
+	// cancelボタンを押したらgoodを減らす
+	$('.cancelButton').on('click', removeGood);
 });

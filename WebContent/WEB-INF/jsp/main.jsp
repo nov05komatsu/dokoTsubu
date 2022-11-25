@@ -10,17 +10,21 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="/dokoTsubu/js/good.js"></script>
 </head>
+
 <body>
 <p class="userName"><c:out value="${loginUser.name}" />さん、ログイン中</p>
 <a href="/dokoTsubu/Logout">ログアウト</a>
 <p><a href="/dokoTsubu/Main">更新</a></p>
 <form action="/dokoTsubu/Main" method="post">
-<input type="text" name="text">
-<input type="submit" value="つぶやく">
+	<input type="text" name="text">
+	<input type="submit" value="つぶやく">
 </form><br>
 <a href="/dokoTsubu/RemoveMutter"><button>つぶやきを削除する</button></a>
+
+<% //スコープにエラーメッセージがあれば表示する %>
 <c:if test="${not empty errorMsg}">${errorMsg}</c:if>
-<!-- <c:if test="${not empty buildedText}">${buildedText}</c:if> -->
+
+<% //つぶやきリストが空でなければ表示 %>
 <c:choose>
 <c:when test="${not empty mutterList}">
 	<ul class="mutterList">
