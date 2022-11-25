@@ -49,5 +49,4 @@ public class Mutter implements Serializable {
 	public int getGood() {
 		return good;
 	}
-	
 }

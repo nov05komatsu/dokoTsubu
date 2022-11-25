@@ -21,7 +21,9 @@ public class Main extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	// ログイン状態によって処理を分ける
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request,
+		HttpServletResponse response) throws ServletException, IOException {
+		
 		// ログイン情報の取得
 		HttpSession session = request.getSession();
 		User loginUser = (User) session.getAttribute("loginUser");
@@ -43,7 +45,9 @@ public class Main extends HttpServlet {
 	}
 	
 	// メイン画面でつぶやきを投稿したときの処理
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request,
+		HttpServletResponse response) throws ServletException, IOException {
+		
 		// postされた値を使う準備、filterを設定しておくのも良い？
 		request.setCharacterEncoding("UTF-8");
 		// trim()していなかったので空白だけのつぶやきも通っていた
