@@ -186,8 +186,7 @@ public class MutterDAO {
 			String sql01 = "SELECT id, good FROM mutter WHERE ID = ?";
 			PreparedStatement pStmt01 = conn.prepareStatement(sql01);
 			pStmt01.setInt(1, mutterId);
-			// .executeUpdate()がうまく動かなかったので.executeQuery()を使用
-			// ResultSetはnullにならず分岐の条件にしづらいので.next()を利用してみる
+			
 			ResultSet rs = pStmt01.executeQuery();
 			if(rs.next()) {
 				good += rs.getInt("good");

@@ -16,9 +16,6 @@ import model.RegisterLogic;
 import model.User;
 import model.ValueCheckLogic;
 
-/**
- * Servlet implementation class Register
- */
 @WebServlet("/Register")
 public class Register extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -29,17 +26,22 @@ public class Register extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//trim()も値チェックもしてなかったので両方空白で通ってた
 		String name = request.getParameter("name").trim();
 		String pass = request.getParameter("pass").trim();
 		String forwardPath = "/WEB-INF/jsp/info.jsp";
 		
+		//入力された値をチェック、エラーがあればメッセージを受け取る
 		ValueCheckLogic vcl = new ValueCheckLogic();
 		ArrayList<String> eMessage = vcl.execute(name, pass);
 		
+		//受け取ったメッセージがあれば新規登録画面へ戻す
 		if(eMessage.size() != 0) {
 			request.setAttribute("eMessage", eMessage);
 			forwardPath = "/WEB-INF/jsp/register.jsp";
 		} else {
+			// 登録ユーザーのデータを取得して名前を比較する
+			// 同じ名前での登録はできないように処理
 			UserDAO dao = new UserDAO();		
 			List<User> userList = dao.findAll();
 			User user = new User(name, pass);
