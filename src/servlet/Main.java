@@ -19,7 +19,7 @@ import model.User;
 @WebServlet("/Main")
 public class Main extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
 	// ログイン状態によって処理を分ける
 	protected void doGet(HttpServletRequest request,
 		HttpServletResponse response) throws ServletException, IOException {
